@@ -23,9 +23,14 @@ client.on("message", message => {
 });
 
 client.on("message", message => {
+  //const dbHello = "Hello";
+  //const dbMessage = ", im DadBot";
+  //const dbFull = dbHello.concat(dbMessage);
   if (message.content.includes("I'm")) {
     message.channel.send("Hello [insert here], im DadBot");
   }
 });
 
-client.login("ODkzNTA0NzUxNzQ3MTA0ODM4.YVcbJQ.ntX7H8aVeJZ8KLGPUG9ORst4-w8");
+client.login("ODk4MDI1Njg1MDk0ODkxNTQw.YWeNlw.dfGl8kPZhKSKBVTNp5KFZN7askw");
+//Dylan's Login = ODkzNTA0NzUxNzQ3MTA0ODM4.YVcbJQ.ntX7H8aVeJZ8KLGPUG9ORst4-w8
+//Jacob's Login = ODk4MDI1Njg1MDk0ODkxNTQw.YWeNlw.dfGl8kPZhKSKBVTNp5KFZN7askw
