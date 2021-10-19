@@ -188,7 +188,7 @@ insert into jokes values(186,'I had planned to be a banker. ||But I lost interes
 insert into jokes values(187,'I was just diagnosed a colorblind. ||It really came out of the purple||');
 insert into jokes values(188,'I really need to fix my watch. ||But I never seem to have the time||');
 insert into jokes values(189,'I used to work at the calendar factory. ||But I got fired for taking a couple days off||');
-insert into jokes values(190,'I used to hate beards. ||But then one grew on me||');
+insert into jokes values(190,'What kind of key opens a banana? ||A monkey||');
 insert into jokes values(191,'What a beautiful wedding. ||Even the cake was in tiers||');
 insert into jokes values(192,'Did you hear about the explosion at the cake factory? ||All that was left was de-brie||');
 insert into jokes values(193,'Whatever you do, don\'t trust an atom. ||They make up everything||');
@@ -199,3 +199,14 @@ insert into jokes values(197,'What is a vampire\'s favorite fruit? ||A neck-tari
 insert into jokes values(198,'Have you heard of a shovel? ||What a groundbreaking invention||');
 insert into jokes values(199,'How does flower greet its baby? ||Hey, Bud!||');
 insert into jokes values(200,'Did you hear about the bakery that burned down? ||That business is toast now||');
+insert into jokes values(201,'What kind of animal is always at the World Series? ||A bat||');
+insert into jokes values(202,'Why can't Elsa have a balloon? ||She'll let it go||');
+insert into jokes values(203,'Where can you always find the thing you lost? ||The last place you look||');
+insert into jokes values(204,'What did the nut say after catching a cold? ||Cashew||');
+insert into jokes values(205,'What is Forrest Gump\'s computer password? ||1Forrest1||');
+insert into jokes values(206,'Want to hear a construction joke? ||I\'m working on it||');
+insert into jokes values(207,'What veggies do pirate hate most? ||Leeks||');
+insert into jokes values(208,'Why do dogs make the worst dance partners? ||They have two left feet||');
+insert into jokes values(209,'What dinosaur had the best vocabulary? ||The thesaurus||');
+insert into jokes values(210,'What time is it when an elephant sits on the fence? ||Time to get a new fence||');
+insert into jokes values(211,'Why didn\'t the orange win the race? ||It ran out of juice||');
