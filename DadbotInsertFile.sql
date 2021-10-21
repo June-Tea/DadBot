@@ -154,7 +154,7 @@ insert into jokes values(152,'I gave all my old batteries away today. ||No charg
 insert into jokes values(153,'Why was the sarafi cat disqualified from the race? ||He was a cheetah||');
 insert into jokes values(154,'What do you call a group of killer whales playing instruments? ||An orca-stra||');
 insert into jokes values(155,'I am terrified of elevators. ||I\'m going to start taking steps to avoid them||');
-insert into jokes values(156,'Imagine a world without geometry. ||Life would be pointless||');
+insert into jokes values(156,'Can you imagine a world without geometry? ||Life would be pointless||');
 insert into jokes values(157,'What did the vet say about the sick tiger? ||I don\'t think he\'s feline well||');
 insert into jokes values(158,'Why do lobsters never give to charity? ||Because they\'re shellfish||');
 insert into jokes values(159,'Did you hear about the lady who stole the calendar? ||She got 12 months||');
@@ -210,3 +210,12 @@ insert into jokes values(208,'Why do dogs make the worst dance partners? ||They 
 insert into jokes values(209,'What dinosaur had the best vocabulary? ||The thesaurus||');
 insert into jokes values(210,'What time is it when an elephant sits on the fence? ||Time to get a new fence||');
 insert into jokes values(211,'Why didn\'t the orange win the race? ||It ran out of juice||');
+insert into jokes values(212,'What do rabbits do after they get married? ||They go on a bunny-moon||');
+insert into jokes values(213,'Why do mallards make great detectives? ||They quack the case wide open||');
+insert into jokes values(214,'Why was the picture sent to prison? ||It was framed||');
+insert into jokes values(215,'What do you call a funny mountain? ||Hill-arious||');
+insert into jokes values(216,'Ghosts are terrible liars. ||You can see right through them||');
+insert into jokes values(217,'How do you fix a cracked jack-o-lantern? ||With a pumpkin patch||');
+insert into jokes values(218,'What did the dentist receive when he won Dentist of the Year? ||A little plaque||');
+insert into jokes values(219,'Where do school supplies go on vacation? ||Pencil-vania||');
+insert into jokes values(220,'I keep asking what LGBT+ stands for. ||So far, no one\'s given me a straight answer||');
