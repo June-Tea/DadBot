@@ -237,3 +237,15 @@ insert into jokes values(235,'What did the leopard say after dinner? ||That hit 
 insert into jokes values(236,'What did the plate say to the fork? ||Dinner is on me||');
 insert into jokes values(237,'Why did the chicken cross the playground? ||To get to the other slide||');
 insert into jokes values(238,'What do you call a sleeping dinosaur? ||A dino-snore|');
+insert into jokes values(239,'Why is corn such a good listener? ||It\'s all ears||');
+insert into jokes values(240,'What do you get when you cross a snowman with a vampire? ||Frostbite||');
+insert into jokes values(241,'How did the hairdresser win the marathon? ||She knew a short cut||');
+insert into jokes values(242,'How do billboard communicate? ||Sign language||');
+insert into jokes values(243,'What do you call a camera with a temper? ||A loose Canon||');
+insert into jokes values(244,'What is a skeleton\'s favorite instrument? ||A trombone||');
+insert into jokes values(245,'What disease do you get around Christmas time? ||Tinselitis||');
+insert into jokes values(246,'What would bears be without bees? ||Ears||');
+insert into jokes values(247,'How much does corn on the cob cost on a pirate ship? ||A buccaneer||');
+insert into jokes values(248,'What do you call a shoe made from a banana peel? ||A slipper||');
+insert into jokes values(249,'Why do zebras have stripes? ||So they don\'t get spotted||');
+insert into jokes values(250,'What time is it when people are throwing pieces of stale bread at you? ||Time to duck||');
