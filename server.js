@@ -1,9 +1,37 @@
+/*
+Jacob Krawitz, Janniel Tejada, Dylan Coyle, Reema Norford
+DADBOT
+
+Description:
+
+*/
+
+
+
 let Discord = require("discord.js");
 let client = new Discord.Client();
 var n = 4;
 //this is a message event, it will read the message the moment it is sent, if it matches
 //the critera of Hello, it will respond.
 
+
+
+//Seperate file reader
+const fs = require('fs');
+
+// Creates a Discord collection, to store commands in seperate file
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+
+for(const file of commandFiles){
+  const command = require(`./commands/${file}`);
+
+  client.commands.set(command.name, command);
+}
+
+
+// Array of jokes
 var jokearray = [
   "What did the computer say to the other after a 16 hour car ride?... Damn that was a hard drive.",
   "Why couldn't the chili practice archery?... He didn't Habanero",
@@ -11,18 +39,27 @@ var jokearray = [
   "I hate people who talk about me behind my back...  They discussed me"
 ];
 
+
+// Command listener
+
 client.on("message", message => {
+
+
+
+  // Hello command
+  // If message is "Hello", activates the hello.js command
   if (message.content == "Hello") {
-    message.channel.send("Hello, Im DadBot");
+    client.commands.get('hello').execute(message);
   }
+
+  
+  // Joke command
+  // If message is "Joke", activates the jokes.js command
   if (message.content == "Joke") {
-    message.channel.send(jokearray[Math.floor(Math.random() * n)]);
-    let photo = new Discord.MessageAttachment(
-      "https://d3thpuk46eyjbu.cloudfront.net/uploads/production/8285/1497701973/original/Laughing_(59303979).jpg?1497701973",
-      "Daddy.png"
-    );
-    message.channel.send(photo);
-  }
+    client.commands.get('jokes').execute(message,n,jokearray,Discord);
+    }
+
+
 });
 
 client.on("message", message => {
@@ -49,6 +86,6 @@ client.on("message", message => {
   }
 });
 
-client.login("ODkzNTA0NzUxNzQ3MTA0ODM4.YVcbJQ.DDjzjBLMHlVB9F-DK0-ZbxXKdZ4");
+client.login("ODk4MDI1Njg1MDk0ODkxNTQw.YWeNlw.eHk6mWUTz3WVIaNnyhlJFTGnFrA");
 //Dylan's Login = ODkzNTA0NzUxNzQ3MTA0ODM4.YVcbJQ.DDjzjBLMHlVB9F-DK0-ZbxXKdZ4
-//Jacob's Login = ODk4MDI1Njg1MDk0ODkxNTQw.YWeNlw.yWjQB6zC-4UcMdD0xefc5vydbtE
+//Jacob's Login = OODk4MDI1Njg1MDk0ODkxNTQw.YWeNlw.eHk6mWUTz3WVIaNnyhlJFTGnFrA
