@@ -275,7 +275,9 @@ client.on("message", message => {
             let resp = "";
             while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
                 n++;
-                resp += keywords[n] + " ";
+                if (n < keywords.length){
+                  resp += keywords[n] + " ";
+                }
             }
             message.channel.send('Hello ' + resp + ', I\'M DADBOT!');
         }
@@ -289,7 +291,9 @@ client.on("message", message => {
             let resp = "";
             while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
                 n++;
-                resp += keywords[n] + " ";
+                if (n < keywords.length){
+                  resp += keywords[n] + " ";
+                }
             }
             message.channel.send('Hello ' + resp + ', I\'M DADBOT!');
         }
@@ -303,7 +307,9 @@ client.on("message", message => {
             let resp = "";
             while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
                 n++;
-                resp += keywords[n] + " ";
+                if (n < keywords.length){
+                  resp += keywords[n] + " ";
+                }
             }
             message.channel.send('Hello ' + resp + ', I\'M DADBOT!');
         }
@@ -316,7 +322,9 @@ client.on("message", message => {
             let resp = "";
             while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
                 n++;
-                resp += keywords[n] + " ";
+                if (n < keywords.length){
+                  resp += keywords[n] + " ";
+                }
             }
             message.channel.send('Hello ' + resp + ', I\'M DADBOT!');
         }
