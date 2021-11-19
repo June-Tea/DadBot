@@ -6,6 +6,17 @@ const client = new Discord.Client();
 
 const queue = new Map();
 
+const fs = require('fs');
+
+var n = 4;
+
+var jokearray = [
+  "What did the computer say to the other after a 16 hour car ride?... Damn that was a hard drive.",
+  "Why couldn't the chili practice archery?... He didn't Habanero",
+  "My can opener broke...  Now it’s a can’t opener",
+  "I hate people who talk about me behind my back...  They discussed me"
+];
+
 client.once("ready", () => {
   console.log("Ready!");
 });
@@ -17,6 +28,17 @@ client.once("reconnecting", () => {
 client.once("disconnect", () => {
   console.log("Disconnect!");
 });
+
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+
+for(const file of commandFiles){
+  const command = require(`./commands/${file}`);
+
+  client.commands.set(command.name, command);
+}
+
 
 client.on("message", async message => {
   if (message.author.bot) return;
