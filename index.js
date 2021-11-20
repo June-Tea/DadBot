@@ -35,17 +35,17 @@ for(const file of commandFiles){
 
 //Once the bot comes online, say something
 client.once("ready", () => {
-  console.log("Ready!");
+  console.log("Lets Get This Victory Royale!");
 });
 
 //Once the bot loses connection and comes back, say something
 client.once("reconnecting", () => {
-  console.log("Reconnecting!");
+  console.log("I Am Lost!");
 });
 
 //Once the bot disconnects, say something
 client.once("disconnect", () => {
-  console.log("Disconnect!");
+  console.log("Very Lost!");
 });
 
 
@@ -94,11 +94,10 @@ client.on("message", async message => {
   else if (message.content.startsWith(`${prefix}stop`)) {
     stop(message, serverQueue);
     return;
-  } 
 
   //if the commands doesn't exist, say so
   else {
-    message.channel.send("You need to enter a valid command!");
+    message.channel.send("I dont understand you (Try Another Command)!");
   }
 });
 
@@ -109,7 +108,7 @@ async function execute(message, serverQueue) {
   const voiceChannel = message.member.voice.channel;
   if (!voiceChannel)
     return message.channel.send(
-      "You need to be in a voice channel to play music!"
+      "Go into a voice channel so I can play some music!"
     );
   const permissions = voiceChannel.permissionsFor(message.client.user);
   if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
@@ -149,7 +148,7 @@ async function execute(message, serverQueue) {
     }
   } else {
     serverQueue.songs.push(song);
-    return message.channel.send(`${song.title} has been added to the queue!`);
+    return message.channel.send(`${song.title} added to queue, Ill spin it up later.`);
   }
 }
 
@@ -157,10 +156,10 @@ async function execute(message, serverQueue) {
 function skip(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "You have to be in a voice channel to stop the music!"
+      "I cant skip the song unless your in the voice channel!"
     );
   if (!serverQueue)
-    return message.channel.send("There is no song that I could skip!");
+    return message.channel.send("I couldnt find another record to skip onto!");
   serverQueue.connection.dispatcher.end();
 }
 
@@ -168,11 +167,11 @@ function skip(message, serverQueue) {
 function stop(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "You have to be in a voice channel to stop the music!"
+      "You cant stop the music unless your in the voice channel!"
     );
     
   if (!serverQueue)
-    return message.channel.send("There is no song that I could stop!");
+    return message.channel.send("stop what? im not spining a record!");
     
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
