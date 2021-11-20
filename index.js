@@ -18,6 +18,7 @@ var jokearray = [
 ];
 
 
+
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
@@ -56,7 +57,12 @@ client.on("message", async message => {
   }
   else if(message.content.startsWith(`${prefix}joke`)) {
     client.commands.get('jokes').execute(message,n,jokearray,Discord);
+    return;
   }
+  else if(message.content.startsWith(`${prefix}advice`)) {
+    client.commands.get('advice').execute(message,Discord);
+  return;
+}
   else if (message.content.startsWith(`${prefix}skip`)) {
     skip(message, serverQueue);
     return;
