@@ -6,6 +6,20 @@ const client = new Discord.Client();
 
 const queue = new Map();
 
+const fs = require('fs');
+
+
+
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+
+for(const file of commandFiles){
+  const command = require(`./commands/${file}`);
+
+  client.commands.set(command.name, command);
+}
+
 client.once("ready", () => {
   console.log("Ready!");
 });
@@ -18,6 +32,7 @@ client.once("disconnect", () => {
   console.log("Disconnect!");
 });
 
+
 client.on("message", async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
@@ -27,7 +42,16 @@ client.on("message", async message => {
   if (message.content.startsWith(`${prefix}play`)) {
     execute(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`${prefix}skip`)) {
+  } 
+  else if(message.content.startsWith(`${prefix}hello`)) {
+    client.commands.get('hello').execute(message);
+    return;
+  }
+  else if(message.content.startsWith(`${prefix}joke`)) {
+    client.commands.get('jokes').execute(message,Discord);
+    return;
+  }
+  else if (message.content.startsWith(`${prefix}skip`)) {
     skip(message, serverQueue);
     return;
   } else if (message.content.startsWith(`${prefix}stop`)) {
