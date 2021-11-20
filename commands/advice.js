@@ -4,7 +4,10 @@
     description: 'The Advice Command',
     execute(message,Discord)
   {
+    // Number of advice, to iterate through the list
     var a = 19;
+
+    //Array of advice
     var advicearray = [
         "Wise men don’t need advice. Fools won’t take it",
         "Never bet your money on another man’s game","It’s easier to advise than be advised.",
@@ -28,7 +31,7 @@
         "I always advise people never to give advice.",
         "Dont light yourself on fire trying to brighten someone else’s existence."
       ];
-    
+            //Send a message of a random element in the array of list
             message.channel.send(advicearray[Math.floor(Math.random() * a)]);
           }
         }
