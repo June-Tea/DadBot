@@ -94,6 +94,7 @@ client.on("message", async message => {
   else if (message.content.startsWith(`${prefix}stop`)) {
     stop(message, serverQueue);
     return;
+  }
 
   //if the commands doesn't exist, say so
   else {
