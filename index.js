@@ -8,14 +8,6 @@ const queue = new Map();
 
 const fs = require('fs');
 
-var n = 4;
-
-var jokearray = [
-  "What did the computer say to the other after a 16 hour car ride?... Damn that was a hard drive.",
-  "Why couldn't the chili practice archery?... He didn't Habanero",
-  "My can opener broke...  Now it’s a can’t opener",
-  "I hate people who talk about me behind my back...  They discussed me"
-];
 
 
 client.commands = new Discord.Collection();
@@ -53,9 +45,11 @@ client.on("message", async message => {
   } 
   else if(message.content.startsWith(`${prefix}hello`)) {
     client.commands.get('hello').execute(message);
+    return;
   }
   else if(message.content.startsWith(`${prefix}joke`)) {
-    client.commands.get('jokes').execute(message,n,jokearray,Discord);
+    client.commands.get('jokes').execute(message,Discord);
+    return;
   }
   else if (message.content.startsWith(`${prefix}skip`)) {
     skip(message, serverQueue);
