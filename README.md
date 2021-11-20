@@ -3,7 +3,7 @@ Welcome to the Discord bot named DadBot! DadBot can play music in voice channels
 
 # Commands:
 
-!play _url) = Plays the song of the url provided. Must be in a voice channel!
+!play _url_ = Plays the song of the url provided. Must be in a voice channel!
 
 !hello = Dadbot says hi!
 
