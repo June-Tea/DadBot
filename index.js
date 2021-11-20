@@ -1,3 +1,13 @@
+/*
+Jacob Krawitz, Janniel Tejada, Dylan Coyle, Reema Norford
+DADBOT
+Description: This is the Discord bot named DadBot! DadBot can play music
+in voice channels, give jokes and advice on command, and more!
+
+*/
+
+
+//Bring in modules discord.js, ytdl-core, and config file
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
 const ytdl = require("ytdl-core");
@@ -6,67 +16,93 @@ const client = new Discord.Client();
 
 const queue = new Map();
 
+//Bring in filesystem module as 
 const fs = require('fs');
 
 
 
-
+//Creates a Discord collection, to store commands in seperate file
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
+//Taking in the command files, set those to different commands
 for(const file of commandFiles){
   const command = require(`./commands/${file}`);
 
   client.commands.set(command.name, command);
 }
 
+//Once the bot comes online, say something
 client.once("ready", () => {
   console.log("Ready!");
 });
 
+//Once the bot loses connection and comes back, say something
 client.once("reconnecting", () => {
   console.log("Reconnecting!");
 });
 
+//Once the bot disconnects, say something
 client.once("disconnect", () => {
   console.log("Disconnect!");
 });
 
 
+//Message listener (if a message contains something, do a command)
 client.on("message", async message => {
+
+  //if the bot sends the message, ignore it
   if (message.author.bot) return;
+
+  //if the message does not start with "!", ignore it
   if (!message.content.startsWith(prefix)) return;
 
   const serverQueue = queue.get(message.guild.id);
 
+  //if the message starts with !play, execute that command
   if (message.content.startsWith(`${prefix}play`)) {
     execute(message, serverQueue);
     return;
   } 
+
+  //if the message starts with !hello, execute the hello cmd
   else if(message.content.startsWith(`${prefix}hello`)) {
     client.commands.get('hello').execute(message);
     return;
   }
+
+  //if the message starts with !jokes, execute the jokes cmd
   else if(message.content.startsWith(`${prefix}joke`)) {
     client.commands.get('jokes').execute(message,Discord);
     return;
   }
+
+  //if the message starts with !advice, execute the advice cmd
   else if(message.content.startsWith(`${prefix}advice`)) {
     client.commands.get('advice').execute(message,Discord);
   return;
-}
+  }
+
+  //if the message starts with !skip, execute the skip cmd
   else if (message.content.startsWith(`${prefix}skip`)) {
     skip(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`${prefix}stop`)) {
+  } 
+
+  //if the message starts with !stop, execute the stop cmd
+  else if (message.content.startsWith(`${prefix}stop`)) {
     stop(message, serverQueue);
     return;
-  } else {
+  } 
+
+  //if the commands doesn't exist, say so
+  else {
     message.channel.send("You need to enter a valid command!");
   }
 });
 
+//Execute (play music) command
 async function execute(message, serverQueue) {
   const args = message.content.split(" ");
 
@@ -117,6 +153,7 @@ async function execute(message, serverQueue) {
   }
 }
 
+//Skip function
 function skip(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
@@ -127,6 +164,7 @@ function skip(message, serverQueue) {
   serverQueue.connection.dispatcher.end();
 }
 
+//Stop function
 function stop(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
@@ -140,6 +178,7 @@ function stop(message, serverQueue) {
   serverQueue.connection.dispatcher.end();
 }
 
+//Play function
 function play(guild, song) {
   const serverQueue = queue.get(guild.id);
   if (!song) {
@@ -159,4 +198,5 @@ function play(guild, song) {
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
 
+//Bot login on the token defined earlier (always comes at the end)
 client.login(token);
