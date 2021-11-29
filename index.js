@@ -16,6 +16,190 @@ const client = new Discord.Client();
 
 const queue = new Map();
 
+// Array of stopwords
+var stopwords = [
+    'a',
+    'about',
+    'above',
+    'after',
+    'again',
+    'against',
+    'all',
+    'am',
+    'an',
+    'and',
+    'any',
+    'are',
+    "aren't",
+    "as",
+    'at',
+    'be',
+    'because',
+    'been',
+    'before',
+    'being',
+    'below',
+    'between',
+    'big',
+    'both',
+    'but',
+    'by',
+    "can't",
+    'cannot',
+    'could',
+    "couldn't",
+    'did',
+    "didn't",
+    'do',
+    'does',
+    "doesn't",
+    'doing',
+    "don't",
+    'down',
+    'each',
+    'extremely',
+    'few',
+    'for',
+    'from',
+    'fucking',
+    'fuckin',
+    'further',
+    'good',
+    'had',
+    "hadn't",
+    'has',
+    "hasn't",
+    'have',
+    "haven't",
+    'having',
+    'he',
+    "he'd",
+    "he'll",
+    "he's",
+    'her',
+    'here',
+    "here's",
+    'hers',
+    'herself',
+    'him',
+    'himself ',
+    'his',
+    'how',
+    "how's",
+    'i',
+    "i'd",
+    "i'll",
+    "i'm",
+    'im',
+    "i've",
+    'if',
+    'in',
+    'into',
+    'is',
+    "isn't",
+    'it',
+    "it's",
+    'its',
+    'itself',
+    "let's",
+    'me',
+    'more',
+    'most',
+    "mustn't",
+    'my',
+    'myself',
+    'no',
+    'nor',
+    'not',
+    'of',
+    'off',
+    'on',
+    'once',
+    'only',
+    'or',
+    'other',
+    'ought',
+    'our',
+    'ours',
+    'ourselves',
+    'out',
+    'over',
+    'own',
+    'pretty',
+    'really',
+    'same',
+    "shan't",
+    'she',
+    "she'd",
+    "she'll",
+    "she's",
+    'should',
+    "shouldn't",
+    'so',
+    'some',
+    'such',
+    'than',
+    'that',
+    "that's",
+    'the',
+    'their',
+    'theirs',
+    'them',
+    'themselves',
+    'then',
+    'there',
+    "there's",
+    'these',
+    'they',
+    "they'd",
+    "they'll",
+    "they're",
+    "they've",
+    'this',
+    'those',
+    'through',
+    'to',
+    'too',
+    'under',
+    'until',
+    'up',
+    'very',
+    'was',
+    "wasn't",
+    'we',
+    "we'd",
+    "we'll",
+    "we're",
+    "we've",
+    'were',
+    "weren't",
+    'what',
+    "what's",
+    'when',
+    "when's",
+    'where',
+    "where's",
+    'which',
+    'while',
+    'who',
+    "who's",
+    'whom',
+    'why',
+    "why's",
+    'with',
+    "won't",
+    'would',
+    "wouldn't",
+    'you',
+    "you'd",
+    "you'll",
+    "you've",
+    'your',
+    'yours',
+    'yourself',
+    'yourselves'
+];
+
 //Bring in filesystem module as 
 const fs = require('fs');
 
@@ -56,7 +240,7 @@ client.on("message", async message => {
   if (message.author.bot) return;
 
   //if the message does not start with "!", ignore it
-  if (!message.content.startsWith(prefix)) return;
+  //if (!message.content.startsWith(prefix)) return;
 
   const serverQueue = queue.get(message.guild.id);
 
@@ -96,9 +280,40 @@ client.on("message", async message => {
     return;
   }
 
-  //if the commands doesn't exist, say so
+  //if the command doesn't exist check for im
   else {
-    message.channel.send("I dont understand you (Try Another Command)!");
+    let tokens = message.content.toLowerCase().split(" ");
+
+    if (tokens.includes("i'm")) {
+        const index = tokens.indexOf("i'm");
+        if (tokens.length > 1 && index < tokens.length - 1) {
+            let keywords = tokens.slice(index, tokens.length);
+            let n = 0;
+            let resp = "";
+            while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
+                n++;
+                if (n < keywords.length){
+                  resp += keywords[n] + " ";
+                }
+            }
+            message.channel.send('Hello ' + resp + ', I\'M DADBOT!');
+        }
+    }
+    else if (tokens.includes("im")) {
+        const index = tokens.indexOf("im");
+        if (tokens.length > 1 && index < tokens.length - 1) {
+            let keywords = tokens.slice(index, tokens.length);
+            let n = 0;
+            let resp = "";
+            while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
+                n++;
+                if (n < keywords.length){
+                  resp += keywords[n] + " ";
+                }
+            }
+            message.channel.send('Hello ' + resp + ', I\'M DADBOT!');
+        }
+    }
   }
 });
 
