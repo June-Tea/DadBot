@@ -10,7 +10,6 @@ module.exports = {
             message.channel.send("!hello = Dadbot says hi!");
             message.channel.send("!advice = Gives some life advice, for all your troubles!");
             message.channel.send("!joke = Guranteed to make you laugh with a hilariously bad joke!");
-        
 
         }
 
