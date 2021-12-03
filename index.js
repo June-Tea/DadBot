@@ -96,6 +96,11 @@ client.on("message", async message => {
     return;
   }
 
+  else if (message.content.startsWith(`${prefix}roll`)){
+    client.commands.get('roll').execute(message);
+  }
+
+
   //if the commands doesn't exist, say so
   else {
     message.channel.send("I dont understand you (Try Another Command)!");
