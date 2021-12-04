@@ -39,12 +39,12 @@ module.exports = {
           if(modWithSign[0] == '-')
           {
             completeTotal = total - parseInt(modWithSign[1]);
-            message.channel.send(completeTotal.toString() + "\n ( (" + outputString + ") " + modWithSign[0] + " " + modWithSign[1] + " )");
+            message.channel.send(completeTotal.toString() + "\n( (" + outputString + ") " + modWithSign[0] + " " + modWithSign[1] + " )");
           }
           else
           {
             completeTotal = total + parseInt(modWithSign[1]);
-            message.channel.send(completeTotal.toString() + "\n ( (" + outputString + ") " + modWithSign[0] + " " + modWithSign[1] + " )");
+            message.channel.send(completeTotal.toString() + "\n( (" + outputString + ") " + modWithSign[0] + " " + modWithSign[1] + " )");
           }
         }
         //if there is no modifier
@@ -66,7 +66,7 @@ module.exports = {
           //for each element in dice rolled (amount of dice), add that number to a string (array --> string)
           diceRolled.forEach(num => outputString += num.toString() + " ");
           //print the total and the rolls that added to it
-          message.channel.send(total.toString() + "\n (" + outputString + ")");
+          message.channel.send(total.toString() + "\n(" + outputString + ")");
         }
       }
       else  //otherwise, there was only one die rolled
@@ -85,13 +85,13 @@ module.exports = {
           {
             //subtract the value by the total and output what the og roll was
             completeTotal = total - parseInt(modWithSign[1]);
-            message.channel.send(completeTotal.toString() + "\n ( " + total.toString() + modWithSign[0] + " " + modWithSign[1] + " )");
+            message.channel.send(completeTotal.toString() + "\n( ( " + total.toString() + " ) " + modWithSign[0] + " " + modWithSign[1] + " )");
           }
           //otherwise, assume the modifier was +
           else
           {
             completeTotal = total + parseInt(modWithSign[1]);
-            message.channel.send(completeTotal.toString() + "\n ( " + total.toString() + modWithSign[0] + " " + modWithSign[1] + " )");          }
+            message.channel.send(completeTotal.toString() + "\n( ( " + total.toString() + " ) " + modWithSign[0] + " " + modWithSign[1] + " )");          }
         }
         //if there was no modifier, just send the total 
         else
