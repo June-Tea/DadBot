@@ -96,9 +96,14 @@ client.on("message", async message => {
     return;
   }
 
+  else if (message.content.startsWith(`${prefix}roll`)){
+    client.commands.get('roll').execute(message);
+  }
+
+
   //if the commands doesn't exist, say so
   else {
-    message.channel.send("I dont understand you (Try Another Command)!");
+    message.channel.send("I don't understand you (Try Another Command)!");
   }
 });
 
@@ -149,7 +154,7 @@ async function execute(message, serverQueue) {
     }
   } else {
     serverQueue.songs.push(song);
-    return message.channel.send(`${song.title} added to queue, Ill spin it up later.`);
+    return message.channel.send(`${song.title} added to queue, I'll spin it up later.`);
   }
 }
 
@@ -157,10 +162,10 @@ async function execute(message, serverQueue) {
 function skip(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "I cant skip the song unless your in the voice channel!"
+      "I can't skip the song unless you're in the voice channel!"
     );
   if (!serverQueue)
-    return message.channel.send("I couldnt find another record to skip onto!");
+    return message.channel.send("I couldn't find another record to skip onto!");
   serverQueue.connection.dispatcher.end();
 }
 
@@ -168,11 +173,11 @@ function skip(message, serverQueue) {
 function stop(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "You cant stop the music unless your in the voice channel!"
+      "You can't stop the music unless you're in the voice channel!"
     );
     
   if (!serverQueue)
-    return message.channel.send("stop what? im not spining a record!");
+    return message.channel.send("Stop what? I'm not spinning a record!");
     
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
