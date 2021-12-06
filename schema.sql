@@ -1,0 +1,21 @@
+CREATE DATABASE DiscordDB;
+
+CREATE TABLE Guilds (
+    guildId VARCHAR(100) NOT NULL PRIMARY KEY,
+    guildOwnerID VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE GuildConfigurable (
+    guildId VARCHAR(100) NOT NULL PRIMARY KEY,
+    cmdPreFix VARCHAR(10) DEFAULT '!'
+);
+
+CREATE TABLE jokes(
+    jokeId			INT NOT NULL PRIMARY KEY,
+    joke 		VARCHAR(200)
+);
+
+CREATE TABLE advice(
+    adviceId			INT NOT NULL PRIMARY KEY,
+    advice 		VARCHAR(1000) NOT NULL
+);
