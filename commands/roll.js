@@ -7,14 +7,25 @@ module.exports = {
     //                  ^tokens[0] ^tokens[1]  ^tokens[2]
     let tokens = message.content.toLowerCase().split(" ");
 
-    if(tokens[1]!=null) //If the dice is present
+    // If the user does not follow format, tell them
+    if(tokens.length > 3)
+    {
+      message.channel.send("Please follow the format *!roll n*d*n +modifier* and try again!");
+    }
+    
+    else if(tokens[1]!=null) //If the dice is present...
     {
       let prompt = tokens[1].split("d");//Split the *n*d*n* part into before the d and after 
 
       let numDice = parseInt(prompt[0]);  //number of dice is before d
       let face = parseInt(prompt[1]); //type of dice is after d
 
-      if(numDice > 1) //if there is more than one dice...
+      //if d0 is input, say so and exit
+      if(face == 0)
+      {
+        message.channel.send("Can't roll a d0!");
+      }
+      else if(numDice > 1) //if there is more than one dice...
       {
         if(tokens[2] != null) // if there was a modifier...
         {
