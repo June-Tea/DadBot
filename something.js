@@ -13,3 +13,5 @@ interface Player {
 	volume: number;
 
 }
+
+export default Player;
