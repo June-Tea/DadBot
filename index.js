@@ -8,12 +8,18 @@ in voice channels, give jokes and advice on command, and more!
 
 
 //Bring in modules discord.js, ytdl-core, and config file
+
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
 const ytdl = require("ytdl-core");
-
+let stopwords = require('./stopwords');
+const guildCommandPrefixes = new Map();
 const client = new Discord.Client();
-
+let connection;
+let advicearray;
+let a;
+let jokearray;
+let n;
 const queue = new Map();
 
 //Bring in filesystem module as 
@@ -36,6 +42,41 @@ for(const file of commandFiles){
 //Once the bot comes online, say something
 client.once("ready", () => {
   console.log("Lets Get This Victory Royale!");
+  client.guilds.cache.forEach(guild => {
+    connection.query(
+        `SELECT cmdPrefix FROM GuildConfigurable WHERE guildId = '${guild.id}'`
+    ).then(result => {
+        guildCommandPrefixes.set(guild.id, result[0][0].cmdPrefix);
+    }).catch(err => console.log(err));
+    // Array of jokes
+    connection.query(
+      `SELECT * FROM jokes`
+    ).then(result => {
+        jokearray = result[0];
+        console.log(jokearray);
+    }).catch(err => console.log(err));
+
+    //Variable to keep track of the number of jokes in the array (to iterate)
+    connection.query(
+        `SELECT MAX(jokeId) AS jokeId FROM jokes`
+    ).then(result => {
+        n = result[0][0].jokeId;
+        console.log(n);
+    }).catch(err => console.log(err));
+    //Array of advice
+    connection.query(
+      `SELECT * FROM advice`
+     ).then(result => {
+      advicearray = result[0];
+     }).catch(err => console.log(err));
+
+    // Number of advice, to iterate through the list
+    connection.query(
+      `SELECT MAX(adviceId) AS adviceId FROM advice`
+  ).then(result => {
+      a = result[0][0].adviceId;
+  }).catch(err => console.log(err));
+});
 });
 
 //Once the bot loses connection and comes back, say something
@@ -54,56 +95,98 @@ client.on("message", async message => {
 
   //if the bot sends the message, ignore it
   if (message.author.bot) return;
+  //get the prefix from the database
+  const prefix = guildCommandPrefixes.get(message.guild.id);
+  //Check to see if the message is a command 
+  if (message.content.startsWith(prefix)) 
+  {
 
-  //if the message does not start with "!", ignore it
-  if (!message.content.startsWith(prefix)) return;
+    const serverQueue = queue.get(message.guild.id);
 
-  const serverQueue = queue.get(message.guild.id);
+    //if the message starts with !play, execute that command
+    if (message.content.startsWith(`${prefix}play`)) {
+      execute(message, serverQueue);
+      return;
+    } 
 
-  //if the message starts with !play, execute that command
-  if (message.content.startsWith(`${prefix}play`)) {
-    execute(message, serverQueue);
+    //if the message starts with !hello, execute the hello cmd
+    else if(message.content.startsWith(`${prefix}hello`)) {
+      client.commands.get('hello').execute(message);
+      return;
+    }
+
+    //if the message starts with !jokes, execute the jokes cmd
+    else if(message.content.startsWith(`${prefix}joke`)) {
+      client.commands.get('jokes').execute(message,Discord,jokearray,n);
+      return;
+    }
+
+    //if the message starts with !advice, execute the advice cmd
+    else if(message.content.startsWith(`${prefix}advice`)) {
+      client.commands.get('advice').execute(message,Discord,advicearray,a);
     return;
-  } 
+    }
 
-  //if the message starts with !hello, execute the hello cmd
-  else if(message.content.startsWith(`${prefix}hello`)) {
-    client.commands.get('hello').execute(message);
-    return;
-  }
+    //if the message starts with !skip, execute the skip cmd
+    else if (message.content.startsWith(`${prefix}skip`)) {
+      skip(message, serverQueue);
+      return;
+    } 
 
-  //if the message starts with !jokes, execute the jokes cmd
-  else if(message.content.startsWith(`${prefix}joke`)) {
-    client.commands.get('jokes').execute(message,Discord);
-    return;
-  }
-
-  //if the message starts with !advice, execute the advice cmd
-  else if(message.content.startsWith(`${prefix}advice`)) {
-    client.commands.get('advice').execute(message,Discord);
-  return;
-  }
-
-  //if the message starts with !skip, execute the skip cmd
-  else if (message.content.startsWith(`${prefix}skip`)) {
-    skip(message, serverQueue);
-    return;
-  } 
-
-  //if the message starts with !stop, execute the stop cmd
-  else if (message.content.startsWith(`${prefix}stop`)) {
-    stop(message, serverQueue);
-    return;
-  }
-
-  else if (message.content.startsWith(`${prefix}roll`)){
+    //if the message starts with !stop, execute the stop cmd
+    else if (message.content.startsWith(`${prefix}stop`)) {
+      stop(message, serverQueue);
+      return;
+    }
+    //if the message starts with !changeprefix execute changeprefix
+    else if (message.content.toLowerCase().startsWith(prefix + 'changeprefix')) {
+      changeprefix(message);
+      return;
+    }
+    else if (message.content.startsWith(`${prefix}roll`)){
     client.commands.get('roll').execute(message);
-  }
+    }
+    //if the commands doesn't exist, say so
+    else {
+      message.channel.send("I dont understand you (Try Another Command)!");
+    }
+  } //if it's not a command check to see if it includes im or i'm
+  
+  else 
+  {
+    let tokens = message.content.toLowerCase().split(" ");
 
-
-  //if the commands doesn't exist, say so
-  else {
-    message.channel.send("I don't understand you (Try Another Command)!");
+    if (tokens.includes("i'm")) {
+      const index = tokens.indexOf("i'm");
+      if (tokens.length > 1 && index < tokens.length - 1) {
+        let keywords = tokens.slice(index, tokens.length);
+        let n = 0;
+        let resp = "";
+        while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
+          n++;
+          if (n < keywords.length) {
+            resp += keywords[n] + " ";
+          }
+        }
+        message.channel.send('Hello ' + resp + ' I\'m Dadbot!');
+      }
+    }
+    
+    else if (tokens.includes("im")) {
+      const index = tokens.indexOf("im");
+      if (tokens.length > 1 && index < tokens.length - 1) {
+        let keywords = tokens.slice(index, tokens.length);
+        let n = 0;
+        let resp = "";
+        while (n < keywords.length && stopwords.includes(keywords[n].toLowerCase())) {
+          n++;
+          if (n < keywords.length) {
+            resp += keywords[n] + " ";
+          }
+        }
+        message.channel.send('Hello ' + resp + ' I\'m Dadbot!');
+      }
+    }
   }
 });
 
@@ -203,5 +286,48 @@ function play(guild, song) {
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
 
+//Changeprefix function
+async function changeprefix(message) {
+  if(message.member.id === message.guild.ownerID) {
+    const [cmdName, newPrefix] = message.content.split(" ");
+    if(newPrefix) {
+      try {
+        await connection.query(
+          `UPDATE GuildConfigurable SET cmdPrefix = '${newPrefix}' WHERE guildID = '${message.guild.id}'` 
+        );
+          guildCommandPrefixes.set(message.guild.id, newPrefix);
+          message.channel.send(`Updated the prefix to ${newPrefix}`);
+      } 
+      catch(err) {
+        console.log(err)
+        message.channel.send(`Failed to update the prefix to ${newPrefix}`);
+      }
+    } 
+    else {
+      message.channel.send('Incorrect amount of arguments');
+    }
+} 
+else {
+  console.log(message.member.id, message.guild.ownerId);
+  message.channel.send('You do not have permission to use that command');
+}
+}
+//assigns the server id and user id to the database when the bot joins
+client.on('guildCreate', async (guild) => {
+  try {
+      await connection.query(
+          `INSERT INTO Guilds VALUES('${guild.id}', '${guild.ownerID}')`
+      );
+      await connection.query(
+          `INSERT INTO GuildConfigurable (guildId) VALUES ('${guild.id}')`
+      );
+  } catch(err) {
+      console.log(err);
+  }
+});
+
 //Bot login on the token defined earlier (always comes at the end)
-client.login(token);
+(async () =>{
+  connection = await require('./database/db');
+  await client.login(token);
+})();
