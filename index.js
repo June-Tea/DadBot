@@ -288,11 +288,11 @@ function play(guild, song) {
 
 //Changeprefix function
 async function changeprefix(message) {
-  if(message.member.id === message.guild.ownerID) {
+  if(message.member.id === message.guild.ownerId) {
     const [cmdName, newPrefix] = message.content.split(" ");
     if(newPrefix) {
       try {
-        await connection.query(
+        await this.connection.query(
           `UPDATE GuildConfigurable SET cmdPrefix = '${newPrefix}' WHERE guildID = '${message.guild.id}'` 
         );
           guildCommandPrefixes.set(message.guild.id, newPrefix);
@@ -308,7 +308,6 @@ async function changeprefix(message) {
     }
 } 
 else {
-  console.log(message.member.id, message.guild.ownerId);
   message.channel.send('You do not have permission to use that command');
 }
 }
@@ -316,7 +315,7 @@ else {
 client.on('guildCreate', async (guild) => {
   try {
       await connection.query(
-          `INSERT INTO Guilds VALUES('${guild.id}', '${guild.ownerID}')`
+          `INSERT INTO Guilds VALUES('${guild.id}', '${guild.ownerId}')`
       );
       await connection.query(
           `INSERT INTO GuildConfigurable (guildId) VALUES ('${guild.id}')`
