@@ -4,7 +4,7 @@ interface Song {
 
 	name: string;
 
-	platform: 'soundcloud';
+	platform: 'YouTube';
 
 	artists: string[];
 
