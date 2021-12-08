@@ -288,17 +288,19 @@ function play(guild, song) {
 
 //Changeprefix function
 async function changeprefix(message) {
+  //Only the server owner can change the prefix
   if(message.member.id === message.guild.ownerID) {
     const [cmdName, newPrefix] = message.content.split(" ");
+    //make sure the user provides the correct number of arguments
     if(newPrefix) {
-      try {
+      try { //tries to update the database with this server's prefix
         await connection.query(
           `UPDATE GuildConfigurable SET cmdPrefix = '${newPrefix}' WHERE guildID = '${message.guild.id}'` 
-        );
+        ); //updates guildcommandprefixes so the new prefix is immediately usable
           guildCommandPrefixes.set(message.guild.id, newPrefix);
           message.channel.send(`Updated the prefix to ${newPrefix}`);
       } 
-      catch(err) {
+      catch(err) { //in case of any error let the user know the prefix wasn't changed
         console.log(err)
         message.channel.send(`Failed to update the prefix to ${newPrefix}`);
       }
@@ -306,9 +308,8 @@ async function changeprefix(message) {
     else {
       message.channel.send('Incorrect amount of arguments');
     }
-} 
+} //Let non owners know they don't have permission to alter the prefix
 else {
-  console.log(message.member.id, message.guild.ownerId);
   message.channel.send('You do not have permission to use that command');
 }
 }
@@ -323,7 +324,12 @@ client.on('guildCreate', async (guild) => {
       );
   } catch(err) {
       console.log(err);
-  }
+  } //Adds the prefix to guildcommandprefixes so the bot can use it
+  connection.query(
+    `SELECT cmdPrefix FROM GuildConfigurable WHERE guildId = '${guild.id}'`
+  ).then(result => {
+    guildCommandPrefixes.set(guild.id, result[0][0].cmdPrefix);
+  }).catch(err => console.log(err));
 });
 
 //Bot login on the token defined earlier (always comes at the end)
