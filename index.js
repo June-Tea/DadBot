@@ -114,6 +114,12 @@ client.on("message", async message => {
       client.commands.get('hello').execute(message);
       return;
     }
+    
+    //if the message starts with !help, execute the help cmd
+    else if(message.content.startsWith(`${prefix}hello`)) {
+      client.commands.get('help').execute(message);
+      return;
+    }
 
     //if the message starts with !jokes, execute the jokes cmd
     else if(message.content.startsWith(`${prefix}joke`)) {
