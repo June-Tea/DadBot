@@ -1,6 +1,8 @@
 # DadBot
 Welcome to the Discord bot named DadBot! DadBot can play music in voice channels, give jokes and advice on command, and more!
 
+Invite link: https://discord.com/api/oauth2/authorize?client_id=893504751747104838&permissions=8&scope=bot
+
 # Commands:
 
 !help = Gives 
@@ -20,6 +22,3 @@ Welcome to the Discord bot named DadBot! DadBot can play music in voice channels
 !skip = Skip to the next song!
 
 !stop = Shut off the music!
-
-#Invite link:
-https://cdn.discordapp.com/attachments/588488542347329536/1012518187348283452/IMG_1047.JPG
