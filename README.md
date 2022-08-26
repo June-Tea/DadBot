@@ -21,5 +21,5 @@ Welcome to the Discord bot named DadBot! DadBot can play music in voice channels
 
 !stop = Shut off the music!
 
-#Invite link
+#Invite link:
 https://cdn.discordapp.com/attachments/588488542347329536/1012518187348283452/IMG_1047.JPG
